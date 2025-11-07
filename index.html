@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:description" content="Who's your 001?" />
+    <meta property="og:image" content="https://i.ibb.co/zTGjGSpV/banner.png" />
+    <meta property="og:url" content="https://cs001.vercel.app" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/output.css">
+    <title>001 Poll</title>
+</head>
+<body class="relative bg-[#1c1c1c] h-screen flex flex-col justify-center items-center gap-8">
+    <h1 class="text-6xl text-white font-[Instrument_Serif] text-center">Who's your <br><span class = "font-[Instrument_Sans]"> 001?</span></h1>
+
+    <div id="contestants" class=" flex gap-8 text-white font-[Instrument_Sans]">
+        <div id="freedom" class="w-full  flex flex-col items-center">
+            <div class="w-30 h-30">
+                 <img class="w-full" src="images/freedom.png" alt="">
+            </div>
+            <h3>Freedom</h3>
+           
+        </div>
+        <div id="sage" class="flex flex-col items-center">
+            <div class="w-30 h-30">
+                 <img class="w-full" src="images/sage.png" alt="">
+            </div>
+            <h3>S.A.G.E</h3>
+        </div>
+    </div>
+    <div class="text-white font-[Instrument_Sans]"> (Click to vote)</div>
+    <div id="poll-line" class="flex w-4/5 h-4 bg-white">
+        <div id="freedom-line" class="h-full w-[30%] bg-[#4459e3]"></div>
+        <div class="flex flex-1 h-full bg-[#ff3633]" id="sage-line"></div>
+    </div>
+    <div id="votes" class="w-7/10 text-white font-[Instrument_Sans] flex justify-between">
+        <p id="freedom-votes">20</p>
+    <p id="sage-votes">80</p>
+    </div>
+
+    <div id="blur" class="hidden backdrop-blur-sm absolute h-screen w-full flex flex-col justify-center items-center font-[Instrument_Sans]">
+        <div id="confirmPopup" class="flex flex-col justify-center items-center h-50 w-3/5 bg-white">
+            <p class="w-3/5 text-center">Are you sure you want to vote for <span id="voteChoice"></span></p>
+
+            <div id="buttons">
+                <button id="confirmBtn" class="m-4 p-2 bg-green-500 text-white rounded-sm">Confirm</button>
+                <button id="cancelBtn" class="m-4 p-2 bg-red-500 text-white rounded-sm">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="absolute bottom-10 text-white font-[Instrument_Sans]">
+        <p>Created by <a href="https://x.com/ryoichi_xl">тк.ryoichi</a></p>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
