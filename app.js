@@ -95,8 +95,10 @@ async function voteSequence() {
 
         if(truthyCheck === true) {
             await updateDoc(docRef, { freedom: increment(1) });
+            confirmBar.classList.add("hidden");
         } else if (truthyCheck === false) {
             await updateDoc(docRef, { sage: increment(1) });
+            confirmBar.classList.add("hidden");
         }
 
         await setDoc(userRef, { voted: true });
