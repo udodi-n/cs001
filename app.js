@@ -32,25 +32,14 @@ let truthyCheck;
 
 const db = getFirestore(app)
 
-function getDeviceFingerprint() {
-  const stored = localStorage.getItem("deviceFingerprint");
-  if (stored) return stored;
-  const fingerprintData = [
-    navigator.userAgent,
-    navigator.language,
-    screen.width,
-    screen.height,
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-  ].join("|");
-  let hash = 0;
-  for (let i = 0; i < fingerprintData.length; i++) {
-    const char = fingerprintData.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0;
-  }
-  const fingerprint = `device_${Math.abs(hash)}`;
-  localStorage.setItem("deviceFingerprint", fingerprint);
-  return fingerprint;
+    const fpPromise = FingerprintJS.load()
+
+async function getDeviceFingerprint() {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const fingerprint = "device_" + result.visitorId;
+
+    return fingerprint;
 }
 
 async function voteSequence() {
@@ -84,7 +73,7 @@ async function voteSequence() {
     })
 
     confirmBtn.addEventListener("click", async () => {
-        const deviceId = getDeviceFingerprint();
+        const deviceId = await getDeviceFingerprint();
         const userRef = doc(db, "voters", deviceId);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
