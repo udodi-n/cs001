@@ -18,10 +18,13 @@ const analytics = getAnalytics(app);
 
 const freedomBtn = document.getElementById("freedom");
 const sageBtn = document.getElementById("sage");
+const obnBtn = document.getElementById("obn")
 const freedomLine = document.getElementById("freedom-line");
 const sageLine = document.getElementById("sage-line");
+const obnLine = document.getElementById("obn-line");
 const freedomVotes = document.getElementById("freedom-votes");
 const sageVotes = document.getElementById("sage-votes");
+const obnVotes = document.getElementById("obn-votes");
 const resultsBar = document.getElementById("poll-line");
 const confirmBar = document.getElementById("blur");
 const voteChoice = document.getElementById("voteChoice")
@@ -46,7 +49,7 @@ async function voteSequence() {
     const docRef = doc(db, "votes", "stats");
     const snapshot = await getDoc(docRef)
     if (!snapshot.exists()) {
-        await setDoc(docRef, {freedom: 0, sage: 0})
+        await setDoc(docRef, {freedom: 0, sage: 0, obumneme: 0})
     }
 
     onSnapshot(docRef, (snapshot) => {
@@ -54,9 +57,11 @@ async function voteSequence() {
             const data = snapshot.data();
             freedomVotes.textContent = data.freedom;
             sageVotes.textContent = data.sage;
-            const total = parseInt(freedomVotes.textContent) + parseInt(sageVotes.textContent);
+            obnVotes.textContent = data.obumneme;
+            const total = parseInt(freedomVotes.textContent) + parseInt(sageVotes.textContent) + parseInt(obnVotes.textContent);
             const percent = (data.freedom / total) * 100;
             freedomLine.style.width = percent + "%";
+            obnLine.style.width = (data.obumneme / total) * 100 + '%';
         }
     })
 
@@ -70,6 +75,12 @@ async function voteSequence() {
         truthyCheck = false;
         confirmBar.classList.remove("hidden");
         voteChoice.innerHTML = "S.A.G.E";
+    })
+
+    obnBtn.addEventListener("click", () => {
+        truthyCheck = "idk";
+        confirmBar.classList.remove("hidden");
+        voteChoice.innerHTML = "Obumneme";
     })
 
     confirmBtn.addEventListener("click", async () => {
@@ -87,6 +98,9 @@ async function voteSequence() {
             confirmBar.classList.add("hidden");
         } else if (truthyCheck === false) {
             await updateDoc(docRef, { sage: increment(1) });
+            confirmBar.classList.add("hidden");
+        } else if (truthyCheck === "idk") {
+            await updateDoc(docRef, { obumneme: increment(1) });
             confirmBar.classList.add("hidden");
         }
 
